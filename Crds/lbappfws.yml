@@ -1,0 +1,69 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: lbappfws.adm.citrix.com
+  namespace: citrixadm
+spec:
+  group: adm.citrix.com
+  versions:
+    - name: v1
+      served: true
+      storage: true
+  scope: Namespaced
+  names:
+    plural: lbappfws
+    singular: lbappfw
+    kind: lbappfw
+    shortNames:
+    - lbfw
+  validation:
+    openAPIV3Schema:
+      type: object
+      properties:
+        spec:
+          type: object
+          properties:
+            stylebook:
+              type: object
+              properties:
+                name:
+                  type: string
+                version:
+                  type: string
+                namespace:
+                  type: string
+            parameters:
+              type: object
+              properties:
+                lb-virtual-port:
+                  type: integer
+                lb-service-type:
+                  type: string
+                svc-service-type:
+                  type: string
+                svc-servers:
+                  type: array
+                  items:
+                    properties:
+                      ip:
+                        type: string
+                      port:
+                        type: integer
+                    required: [ip, port]
+                waf-settings:
+                  type: object
+                  properties:
+                    rule:
+                      type: string
+                    type: 
+                      type: array
+                    profile-settings:
+                      type: object
+                      properties:
+                        denyurl-settings:
+                          type: object
+                          properties:
+                            denyurlaction:
+                              type: array
+                    enable-ipreputation:
+                      type: boolean
